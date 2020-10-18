@@ -1,5 +1,5 @@
 import { LanguageService } from './../services/'
-import { Language } from './../entities'
+import { Language } from './../entity'
 import { Args, FieldResolver, Query, Resolver, Root } from 'type-graphql'
 import { Service } from 'typedi'
 import { GetLanguageArgs } from '../types'
