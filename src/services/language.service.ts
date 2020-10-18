@@ -1,15 +1,19 @@
 import { Service } from 'typedi'
-import { Language } from '../entities'
+import { Language } from '../entity'
 
 const languages = [{
     id: '1',
     nativeName: 'Español',
     name: 'Spanish',
+    createdDate: new Date(),
+    updatedDate: new Date()
 },
 {
     id: '2',
     nativeName: 'Português',
     name: 'Portuguese',
+    createdDate: new Date(),
+    updatedDate: new Date()
 }]
 
 @Service()
