@@ -1,4 +1,5 @@
 import { Service } from 'typedi'
+import { Repository } from 'typeorm'
 import { Language } from '../entity'
 
 const languages = [{
@@ -16,10 +17,18 @@ const languages = [{
     updatedDate: new Date()
 }]
 
+type languageType = {
+    id?: string
+    name?: string
+    nativeName?: string
+}
+
 @Service()
 export class LanguageService {
+
+    constructor(private langRepository: Repository<Language>) {}
     
-    async getLanguage(dto: { id?: string; name?: string; nativeName?: string }): Promise<Language | null> {
+    async getLanguage(dto: languageType): Promise<Language | null> {
         const r1 = dto.id ? languages.filter (item => item.id === dto.id) : []
         const r2 = dto.name ? languages.filter (item => item.name === dto.name) : []
         const r3 = dto.nativeName ? languages.filter (item => item.nativeName === dto.nativeName) : []
@@ -29,6 +38,6 @@ export class LanguageService {
     }
 
     async getLanguages(): Promise<Language[]> {
-        return await Promise.resolve(languages)
+        return this.langRepository.find({ order: { name: 'ASC' }})
     }
 }
