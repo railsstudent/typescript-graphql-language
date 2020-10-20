@@ -1,7 +1,7 @@
 {
   "name": "typescript-graphql-language",
   "version": "1.0.0",
-  "description": "Setup a GraphQL playground in to query Spanish phrases I learnt",
+  "description": "Setup a GraphQL playground in to query Spanish texts I learnt",
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
@@ -66,6 +66,7 @@
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.0",
     "typedi": "^0.8.0",
-    "typeorm": "^0.2.28"
+    "typeorm": "^0.2.28",
+    "typeorm-typedi-extensions": "^0.2.3"
   }
 }

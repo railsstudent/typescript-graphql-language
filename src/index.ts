@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { createConnection } from 'typeorm';
+import { createConnection, useContainer } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
 import { Container } from 'typedi'
@@ -8,12 +8,14 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import compression from 'compression'
+import typeorm from 'typeorm'
 // tslint:disable-next-line: no-var-requires
 const helmet = require('helmet')
 
 async function bootstrap() {
+    useContainer(Container)
     await createConnection()
-
+    
     const schema = await buildSchema({
         resolvers: [__dirname + '/**/*.resolver.{ts,js}'],
         container: Container,
