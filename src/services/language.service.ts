@@ -3,21 +3,6 @@ import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Language } from '../entity'
 
-const languages = [{
-    id: '1',
-    nativeName: 'Español',
-    name: 'Spanish',
-    createdDate: new Date(),
-    updatedDate: new Date()
-},
-{
-    id: '2',
-    nativeName: 'Português',
-    name: 'Portuguese',
-    createdDate: new Date(),
-    updatedDate: new Date()
-}]
-
 type languageType = {
     id?: string
     name?: string
@@ -31,13 +16,13 @@ export class LanguageService {
         private readonly langRepository: Repository<Language>
     ) {}
     
-    async getLanguage(dto: languageType): Promise<Language | null> {
-        const r1 = dto.id ? languages.filter (item => item.id === dto.id) : []
-        const r2 = dto.name ? languages.filter (item => item.name === dto.name) : []
-        const r3 = dto.nativeName ? languages.filter (item => item.nativeName === dto.nativeName) : []
-
-        const all = [...r1, ...r2, ...r3] 
-        return all.length > 0 ? all[0] : null
+    async getLanguage(dto: languageType): Promise<Language | undefined> {
+        try {
+            return dto ? await this.langRepository.findOne(dto) : undefined
+        } catch (e) {
+            console.log(e)
+            return undefined
+        }
     }
 
     async getLanguages(): Promise<Language[]> {

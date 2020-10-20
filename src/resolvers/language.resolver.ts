@@ -15,13 +15,13 @@ export class LanguageResolver {
     }
 
     @Query(() => Language, { nullable: true })
-    async language(@Args() { id, name, nativeName }: GetLanguageArgs): Promise<Language | null> {
-        return await this.service.getLanguage({ id, name, nativeName })
+    async language(@Args() args: GetLanguageArgs): Promise<Language | undefined> {
+        return await this.service.getLanguage(args)
     }
 
     @FieldResolver()
     title(@Root() language: Language) {
-        const { name, nativeName } = language
+        const { name = '', nativeName = '' } = language || {}
         return `${name} (${nativeName})`
     }
 }
