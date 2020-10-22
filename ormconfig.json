@@ -5,18 +5,12 @@
     "username": "postgres",
     "password": "postgres",
     "database": "postgres",
-    "entities": [
-        "dist/entity/**/*.js"
-    ],
-    "migrations": [
-        "dist/migration/**/*.js"
-    ],
-    "subscribers": [
-        "src/subscriber/**/*.js"
-    ],
+    "entities": ["dist/entity/**/*.js"],
+    "migrations": ["dist/migration/**/*.js"],
+    "subscribers": ["src/subscriber/**/*.js"],
     "cli": {
         "entitiesDir": "src/entity",
         "migrationsDir": "src/migration",
         "subscribersDir": "src/subscriber"
     }
- }
+}
