@@ -12,7 +12,7 @@
         "dev": "nodemon --watch src -e ts --exec npm run dev:start",
         "start": "node dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \"*.{md,json}\"",
+        "format": "prettier --write .",
         "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
     },
     "repository": {
@@ -23,7 +23,7 @@
         "typescript",
         "graphql",
         "apollo-server-express",
-        "docker",
+        "docker-compose",
         "typeorm",
         "type-graphql",
         "postgreSql"
@@ -77,11 +77,12 @@
         }
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx,json}": [
+        "*.{ts,tsx,js}": [
+            "npm run lint",
             "npm run format",
             "git add"
         ],
-        "*.{md,json}": [
+        "*.{json,md}": [
             "npm run format",
             "git add"
         ]

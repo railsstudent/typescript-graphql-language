@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { createConnection, useContainer } from 'typeorm';
+import { createConnection, useContainer } from 'typeorm'
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
 import { Container } from 'typedi'
@@ -15,7 +15,7 @@ const helmet = require('helmet')
 async function bootstrap() {
     useContainer(Container)
     await createConnection()
-    
+
     const schema = await buildSchema({
         resolvers: [__dirname + '/**/*.resolver.{ts,js}'],
         container: Container,

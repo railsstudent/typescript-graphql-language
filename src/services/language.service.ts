@@ -13,9 +13,9 @@ type languageType = {
 export class LanguageService {
     constructor(
         @InjectRepository(Language)
-        private readonly langRepository: Repository<Language>
+        private readonly langRepository: Repository<Language>,
     ) {}
-    
+
     async getLanguage(dto: languageType): Promise<Language | undefined> {
         try {
             return dto ? await this.langRepository.findOne(dto) : undefined
@@ -26,6 +26,6 @@ export class LanguageService {
     }
 
     async getLanguages(): Promise<Language[]> {
-        return await this.langRepository.find({ order: { name: 'ASC' }})
+        return await this.langRepository.find({ order: { name: 'ASC' } })
     }
 }

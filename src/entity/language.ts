@@ -1,6 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsString } from 'class-validator'
 
 @Entity()
 @ObjectType({ description: 'The language model' })
