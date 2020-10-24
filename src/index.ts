@@ -8,9 +8,11 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import compression from 'compression'
-import typeorm from 'typeorm'
+import * as dotenv from 'dotenv'
 // tslint:disable-next-line: no-var-requires
 const helmet = require('helmet')
+
+dotenv.config()
 
 async function bootstrap() {
     useContainer(Container)
@@ -37,8 +39,9 @@ async function bootstrap() {
     app.use(bodyParser.urlencoded({ extended: false }))
 
     server.applyMiddleware({ app })
-    app.listen(process.env.port || 4000, () => {
-        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+    const port = process.env.PORT || 4000
+    app.listen(port, () => {
+        console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
     })
 }
 
