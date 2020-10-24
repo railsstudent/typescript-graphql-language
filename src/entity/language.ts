@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
 
@@ -16,6 +16,7 @@ export class Language {
 
     @IsString()
     @Column({ type: 'text', nullable: false })
+    @Index({ unique: true })
     @Field({ nullable: false })
     name: string
 

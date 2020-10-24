@@ -1,6 +1,6 @@
 import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import { Service } from 'typedi'
-import { AddLanguageInput, GetLanguageArgs } from './../types'
+import { AddLanguageInput, GetLanguageArgs, UpdateLanguageInput } from './../types'
 import { LanguageService } from './../services/'
 import { Language } from './../entity'
 
@@ -21,18 +21,12 @@ export class LanguageResolver {
 
     @Mutation(() => Language!)
     addLanguage(@Arg('data') input: AddLanguageInput): Promise<Language> {
-        if (!input) {
-            throw new Error('Add language input is missing')
-        }
-
-        if (!input.name) {
-            throw new Error('Name is missing')
-        }
-
-        if (!input.nativeName) {
-            throw new Error('Native name is missing')
-        }
         return this.service.addLanguage(input)
+    }
+
+    @Mutation(() => Language!)
+    updateLanguage(@Arg('data') input: UpdateLanguageInput): Promise<Language | undefined> {
+        return this.service.updateLanguage(input)
     }
 
     @FieldResolver()

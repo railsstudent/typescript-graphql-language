@@ -1,14 +1,8 @@
-import { AddLanguageInput } from './../types/add-language.input'
 import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Language } from '../entity'
-
-type languageType = {
-    id?: string
-    name?: string
-    nativeName?: string
-}
+import { AddLanguageInput, GetLanguageArgs, UpdateLanguageInput } from './../types'
 
 @Service()
 export class LanguageService {
@@ -17,7 +11,7 @@ export class LanguageService {
         private readonly langRepository: Repository<Language>,
     ) {}
 
-    async getLanguage(dto: languageType): Promise<Language | undefined> {
+    async getLanguage(dto: GetLanguageArgs): Promise<Language | undefined> {
         try {
             return dto ? await this.langRepository.findOne(dto) : undefined
         } catch (e) {
@@ -31,6 +25,34 @@ export class LanguageService {
     }
 
     async addLanguage(input: AddLanguageInput): Promise<Language> {
-        return this.langRepository.save(this.langRepository.create(input))
+        if (!input) {
+            throw new Error('Add language input is missing')
+        }
+
+        if (!input.name) {
+            throw new Error('Name is missing')
+        }
+
+        if (!input.nativeName) {
+            throw new Error('Native name is missing')
+        }
+        try {
+            return this.langRepository.save(this.langRepository.create(input))
+        } catch (e) {
+            throw e
+        }
+    }
+
+    async updateLanguage(input: UpdateLanguageInput): Promise<Language | undefined> {
+        try {
+            const { id, ...body } = input
+            if (!id) {
+                throw new Error('Language id is missing')
+            }
+            await this.langRepository.update(id, body)
+            return this.langRepository.findOne(id)
+        } catch (e) {
+            throw e
+        }
     }
 }

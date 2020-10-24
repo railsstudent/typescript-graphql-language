@@ -4,19 +4,27 @@ import { IsDefined, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-valid
 
 @InputType({ description: 'Update language' })
 export class UpdateLanguageInput implements Partial<Language> {
-    @IsOptional()
+    @IsDefined()
+    @IsNotEmpty()
     @IsUUID()
     @Field(() => ID)
-    id?: string
+    id: string
 
     @IsOptional()
-    @IsString()
     @IsNotEmpty()
-    @Field()
+    @IsString()
+    @Field({ nullable: true })
     name?: string
 
     @IsOptional()
-    @IsString()
     @IsNotEmpty()
+    @IsString()
+    @Field({ nullable: true })
     nativeName?: string
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    @Field({ nullable: true })
+    flag?: string
 }
