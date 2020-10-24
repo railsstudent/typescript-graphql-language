@@ -1,18 +1,24 @@
-import { Language } from './../entity'
 import { Field, InputType } from 'type-graphql'
-import { IsDefined, IsNotEmpty, IsString } from 'class-validator'
+import { IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { Language } from './../entity'
 
 @InputType({ description: 'Add language' })
 export class AddLanguageInput implements Partial<Language> {
-    @IsString()
     @IsDefined()
     @IsNotEmpty()
+    @IsString()
     @Field()
     name: string
 
-    @IsString()
     @IsDefined()
     @IsNotEmpty()
+    @IsString()
     @Field()
     nativeName: string
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    @Field({ nullable: true })
+    flag?: string
 }

@@ -1,8 +1,8 @@
+import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
+import { Service } from 'typedi'
+import { AddLanguageInput, GetLanguageArgs } from './../types'
 import { LanguageService } from './../services/'
 import { Language } from './../entity'
-import { Args, FieldResolver, Query, Resolver, Root } from 'type-graphql'
-import { Service } from 'typedi'
-import { GetLanguageArgs } from '../types'
 
 @Service()
 @Resolver(() => Language)
@@ -10,13 +10,29 @@ export class LanguageResolver {
     constructor(private service: LanguageService) {}
 
     @Query(() => [Language]!)
-    async languages(): Promise<Language[]> {
-        return await this.service.getLanguages()
+    languages(): Promise<Language[]> {
+        return this.service.getLanguages()
     }
 
     @Query(() => Language, { nullable: true })
-    async language(@Args() args: GetLanguageArgs): Promise<Language | undefined> {
-        return await this.service.getLanguage(args)
+    language(@Args() args: GetLanguageArgs): Promise<Language | undefined> {
+        return this.service.getLanguage(args)
+    }
+
+    @Mutation(() => Language!)
+    addLanguage(@Arg('data') input: AddLanguageInput): Promise<Language> {
+        if (!input) {
+            throw new Error('Add language input is missing')
+        }
+
+        if (!input.name) {
+            throw new Error('Name is missing')
+        }
+
+        if (!input.nativeName) {
+            throw new Error('Native name is missing')
+        }
+        return this.service.addLanguage(input)
     }
 
     @FieldResolver()

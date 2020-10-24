@@ -1,3 +1,4 @@
+import { AddLanguageInput } from './../types/add-language.input'
 import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
@@ -27,5 +28,9 @@ export class LanguageService {
 
     async getLanguages(): Promise<Language[]> {
         return await this.langRepository.find({ order: { name: 'ASC' } })
+    }
+
+    async addLanguage(input: AddLanguageInput): Promise<Language> {
+        return this.langRepository.save(this.langRepository.create(input))
     }
 }
