@@ -23,6 +23,11 @@ export class Language {
     @Field()
     title?: string
 
+    @IsString()
+    @Column({ type: 'text', nullable: false, default: () => "''" })
+    @Field()
+    flag: string
+
     @IsDate()
     @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP', nullable: false })
     @CreateDateColumn()
