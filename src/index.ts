@@ -11,6 +11,7 @@ import compression from 'compression'
 import * as dotenv from 'dotenv'
 // tslint:disable-next-line: no-var-requires
 const helmet = require('helmet')
+const { urlencoded, json } = bodyParser
 
 dotenv.config()
 
@@ -35,8 +36,8 @@ async function bootstrap() {
     app.use(compression())
     app.use(helmet({ contentSecurityPolicy: process.env.NODE_ENV === 'production' ? undefined : false }))
     app.use(morgan('dev'))
-    app.use(bodyParser.json())
-    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(json())
+    app.use(urlencoded({ extended: false }))
 
     server.applyMiddleware({ app })
     const port = process.env.PORT || 4000
