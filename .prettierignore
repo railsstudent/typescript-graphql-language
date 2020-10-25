@@ -2,5 +2,5 @@ dist
 node_modules
 schema.gql
 package.json
-ormconfig.json
+ormconfig.js
 *.yml

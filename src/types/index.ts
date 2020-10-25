@@ -1,3 +1,6 @@
 export * from './language.type'
 export * from './add-language.input'
 export * from './update-language.input'
+export * from './translate-language.type'
+export * from './add-translate-language.input'
+export * from './update-translate-language.input'

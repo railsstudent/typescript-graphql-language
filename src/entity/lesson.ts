@@ -1,11 +1,11 @@
-import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
-import { Lesson } from './lesson'
+import { Language } from './language'
 
 @Entity()
-@ObjectType({ description: 'The language model' })
-export class Language {
+@ObjectType({ description: 'The lesson model' })
+export class Lesson {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string
@@ -13,22 +13,10 @@ export class Language {
     @IsString()
     @Column({ type: 'text', nullable: false })
     @Field({ nullable: false })
-    nativeName: string
-
-    @IsString()
-    @Column({ type: 'text', nullable: false })
-    @Index({ unique: true })
-    @Field({ nullable: false })
     name: string
 
-    @IsString()
-    @Field()
-    title?: string
-
-    @IsString()
-    @Column({ type: 'text', nullable: false, default: () => "''" })
-    @Field()
-    flag: string
+    @ManyToOne(() => Language)
+    language: Language
 
     @IsDate()
     @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP', nullable: false })
@@ -39,7 +27,4 @@ export class Language {
     @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP', nullable: false })
     @UpdateDateColumn()
     updatedDate: Date
-
-    @OneToMany(() => Lesson, (lesson) => lesson.language)
-    lessons: Lesson[]
 }

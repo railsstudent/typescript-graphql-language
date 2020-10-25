@@ -11,9 +11,9 @@ export class LanguageService {
         private readonly langRepository: Repository<Language>,
     ) {}
 
-    async getLanguage(dto: GetLanguageArgs): Promise<Language | undefined> {
+    async getLanguage(args: GetLanguageArgs): Promise<Language | undefined> {
         try {
-            return dto ? await this.langRepository.findOne(dto) : undefined
+            return args ? await this.langRepository.findOne(args) : undefined
         } catch (e) {
             console.log(e)
             return undefined
@@ -36,23 +36,16 @@ export class LanguageService {
         if (!input.nativeName) {
             throw new Error('Native name is missing')
         }
-        try {
-            return this.langRepository.save(this.langRepository.create(input))
-        } catch (e) {
-            throw e
-        }
+
+        return this.langRepository.save(this.langRepository.create(input))
     }
 
     async updateLanguage(input: UpdateLanguageInput): Promise<Language | undefined> {
-        try {
-            const { id, ...body } = input
-            if (!id) {
-                throw new Error('Language id is missing')
-            }
-            await this.langRepository.update(id, body)
-            return this.langRepository.findOne(id)
-        } catch (e) {
-            throw e
+        const { id, ...body } = input
+        if (!id) {
+            throw new Error('Language id is missing')
         }
+        await this.langRepository.update(id, body)
+        return this.langRepository.findOne(id)
     }
 }
