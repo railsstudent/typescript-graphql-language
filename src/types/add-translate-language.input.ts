@@ -3,7 +3,7 @@ import { Field, InputType } from 'type-graphql'
 import { TranslateLanguage } from '../entity'
 
 @InputType({ description: 'Add translation language input' })
-export class AddTranslationLanguageInput implements Partial<TranslateLanguage> {
+export class AddTranslateLanguageInput implements Partial<TranslateLanguage> {
     @IsDefined()
     @IsNotEmpty()
     @IsString()

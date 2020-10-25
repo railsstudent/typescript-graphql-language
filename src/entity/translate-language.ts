@@ -1,11 +1,11 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsInt, IsString } from 'class-validator'
 
 @Entity()
 @ObjectType({ description: 'The translate language model' })
 export class TranslateLanguage {
-    @PrimaryColumn('int')
+    @PrimaryGeneratedColumn('increment')
     @IsInt()
     @Field(() => ID)
     id: number

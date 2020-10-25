@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { TranslateLanguage } from '../entity'
-import { GetTranslationLanguageArgs, AddTranslationLanguageInput, UpdateTranslationLanguageInput } from '../types'
+import { GetTranslationLanguageArgs, AddTranslateLanguageInput, UpdateTranslateLanguageInput } from '../types'
 
 @Service()
 export class TranslationLanguageService {
@@ -24,7 +24,7 @@ export class TranslationLanguageService {
         return await this.langRepository.find({ order: { language: 'ASC' } })
     }
 
-    async addLanguage(input: AddTranslationLanguageInput): Promise<TranslateLanguage> {
+    async addLanguage(input: AddTranslateLanguageInput): Promise<TranslateLanguage> {
         if (!input) {
             throw new Error('Add language input is missing')
         }
@@ -36,7 +36,7 @@ export class TranslationLanguageService {
         return this.langRepository.save(this.langRepository.create(input))
     }
 
-    async updateLanguage(input: UpdateTranslationLanguageInput): Promise<TranslateLanguage | undefined> {
+    async updateLanguage(input: UpdateTranslateLanguageInput): Promise<TranslateLanguage | undefined> {
         const { id, ...body } = input
         if (!id) {
             throw new Error('Language id is missing')

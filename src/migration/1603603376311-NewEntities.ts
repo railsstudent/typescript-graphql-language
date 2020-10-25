@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class NewEntities1603602661466 implements MigrationInterface {
-    name = 'NewEntities1603602661466'
+export class NewEntities1603603376311 implements MigrationInterface {
+    name = 'NewEntities1603603376311'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(
@@ -11,7 +11,7 @@ export class NewEntities1603602661466 implements MigrationInterface {
             `CREATE TABLE "phrase" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "phrase" text NOT NULL, "createdDate" TIMESTAMP NOT NULL DEFAULT now(), "updatedDate" TIMESTAMP NOT NULL DEFAULT now(), "lessonId" uuid, CONSTRAINT "PK_c62abf17177643294ade6f1a42b" PRIMARY KEY ("id"))`,
         )
         await queryRunner.query(
-            `CREATE TABLE "translate_language" ("id" integer NOT NULL, "language" text NOT NULL, "createdDate" TIMESTAMP NOT NULL DEFAULT now(), "updatedDate" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_6424ace6d42ec2f73d9ea3e0e92" PRIMARY KEY ("id"))`,
+            `CREATE TABLE "translate_language" ("id" SERIAL NOT NULL, "language" text NOT NULL, "createdDate" TIMESTAMP NOT NULL DEFAULT now(), "updatedDate" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_6424ace6d42ec2f73d9ea3e0e92" PRIMARY KEY ("id"))`,
         )
         await queryRunner.query(
             `CREATE UNIQUE INDEX "IDX_db0fc9f4a4a561308387f4ac8d" ON "translate_language" ("language") `,
@@ -31,6 +31,12 @@ export class NewEntities1603602661466 implements MigrationInterface {
         await queryRunner.query(
             `ALTER TABLE "translation" ADD CONSTRAINT "FK_1006a0b66260965ccf2ea7d4635" FOREIGN KEY ("phraseId") REFERENCES "phrase"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
         )
+
+        const [{ id }] = await queryRunner.query(`SELECT id FROM "language" WHERE "name" = 'Spanish' limit 1`)
+        await queryRunner.query(
+            `INSERT INTO "translate_language"("language") values ('English'), ('Traditional Chinese')`,
+        )
+        await queryRunner.query(`INSERT INTO "lesson"("name", "languageId") values ('Gender', '${id}')`)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
