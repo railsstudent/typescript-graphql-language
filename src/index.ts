@@ -31,10 +31,11 @@ async function bootstrap() {
         introspection: true,
     })
 
+    const contentSecurityPolicy = process.env.NODE_ENV === 'production' ? undefined : false
     const app = express()
     app.use(cors())
     app.use(compression())
-    app.use(helmet({ contentSecurityPolicy: process.env.NODE_ENV === 'production' ? undefined : false }))
+    app.use(helmet({ contentSecurityPolicy }))
     app.use(morgan('dev'))
     app.use(json())
     app.use(urlencoded({ extended: false }))
