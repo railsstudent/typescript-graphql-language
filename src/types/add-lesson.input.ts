@@ -1,6 +1,5 @@
 import { Field, InputType } from 'type-graphql'
 import { IsDefined, IsNotEmpty, IsString } from 'class-validator'
-import { Lesson } from './../entity'
 
 @InputType({ description: 'Add lesson' })
 export class AddLessonInput {

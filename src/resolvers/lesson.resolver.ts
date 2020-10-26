@@ -2,7 +2,7 @@ import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-
 import { Service } from 'typedi'
 import { LessonService } from '../services'
 import { Language, Lesson, Phrase } from './../entity'
-import { GetLanguageArgs, AddLessonInput } from './../types'
+import { GetLanguageArgs, AddLessonInput, UpdateLessonInput } from './../types'
 
 @Service()
 @Resolver(() => Lesson)
@@ -24,10 +24,10 @@ export class LessonResolver {
         return this.service.addLesson(input)
     }
 
-    // @Mutation(() => TranslateLanguage, { nullable: false })
-    // updateTranslateLanguage(@Arg('data') input: UpdateTranslateLanguageInput): Promise<TranslateLanguage | undefined> {
-    //     return this.service.updateLanguage(input)
-    // }
+    @Mutation(() => Lesson, { nullable: false })
+    updateLesson(@Arg('data') input: UpdateLessonInput): Promise<Lesson | undefined> {
+        return this.service.updateLesson(input)
+    }
 
     @FieldResolver()
     async phrases(@Root() lesson: Lesson): Promise<Phrase[]> {

@@ -101,12 +101,12 @@ export class LessonService {
         return this.lessonRepository.save(this.lessonRepository.create(payload))
     }
 
-    // async updateLanguage(input: UpdateTranslateLanguageInput): Promise<TranslateLanguage | undefined> {
-    //     const { id, ...body } = input
-    //     if (!id) {
-    //         throw new Error('Language id is missing')
-    //     }
-    //     await this.langRepository.update(id, body)
-    //     return this.langRepository.findOne(id)
-    // }
+    async updateLesson(input: any): Promise<Lesson | undefined> {
+        const { id, ...body } = input
+        if (!id) {
+            throw new Error('Lesson id is missing')
+        }
+        await this.lessonRepository.update(id, body)
+        return this.lessonRepository.findOne(id)
+    }
 }
