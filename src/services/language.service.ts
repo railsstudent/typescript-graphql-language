@@ -25,26 +25,11 @@ export class LanguageService {
     }
 
     async addLanguage(input: AddLanguageInput): Promise<Language> {
-        if (!input) {
-            throw new Error('Add language input is missing')
-        }
-
-        if (!input.name) {
-            throw new Error('Name is missing')
-        }
-
-        if (!input.nativeName) {
-            throw new Error('Native name is missing')
-        }
-
         return this.langRepository.save(this.langRepository.create(input))
     }
 
     async updateLanguage(input: UpdateLanguageInput): Promise<Language | undefined> {
         const { id, ...body } = input
-        if (!id) {
-            throw new Error('Language id is missing')
-        }
         await this.langRepository.update(id, body)
         return this.langRepository.findOne(id)
     }

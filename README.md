@@ -35,6 +35,11 @@ Username: pgadmin4@pgadmin.org
 Password: pgadmin
 ```
 
+```
+Connection
+Host: pgsql-server
+```
+
 ### TypeORM generate migration
 
 ```

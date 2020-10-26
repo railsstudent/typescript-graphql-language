@@ -7,18 +7,18 @@ export class AddLanguageInput implements Partial<Language> {
     @IsDefined()
     @IsNotEmpty()
     @IsString()
-    @Field()
+    @Field(() => String)
     name: string
 
     @IsDefined()
     @IsNotEmpty()
     @IsString()
-    @Field()
+    @Field(() => String)
     nativeName: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     flag?: string
 }

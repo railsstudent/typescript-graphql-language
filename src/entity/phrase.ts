@@ -1,4 +1,14 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Translation } from './translation'
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
 import { Lesson } from './lesson'
@@ -11,12 +21,16 @@ export class Phrase {
     id: string
 
     @IsString()
+    @Index({ unique: true })
     @Column({ type: 'text', nullable: false })
     @Field({ nullable: false })
     phrase: string
 
     @ManyToOne(() => Lesson)
     lesson: Lesson
+
+    @OneToMany(() => Translation, (ret) => ret.phrase)
+    translations: Translation[]
 
     @IsDate()
     @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP', nullable: false })

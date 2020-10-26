@@ -1,13 +1,13 @@
 import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import { Service } from 'typedi'
 import { AddLanguageInput, GetLanguageArgs, UpdateLanguageInput } from './../types'
-import { LanguageService } from './../services/'
-import { Language } from './../entity'
+import { LanguageService, LessonService } from './../services/'
+import { Language, Lesson } from './../entity'
 
 @Service()
 @Resolver(() => Language)
 export class LanguageResolver {
-    constructor(private service: LanguageService) {}
+    constructor(private service: LanguageService, private lessonService: LessonService) {}
 
     @Query(() => [Language]!)
     languages(): Promise<Language[]> {
@@ -33,5 +33,10 @@ export class LanguageResolver {
     title(@Root() language: Language) {
         const { name = '', nativeName = '' } = language || {}
         return `${name} (${nativeName})`
+    }
+
+    @FieldResolver()
+    lessons(@Root() language: Language): Promise<Lesson[]> {
+        return this.lessonService.getLessons({ id: language.id })
     }
 }

@@ -22,7 +22,7 @@ export class Language {
     name: string
 
     @IsString()
-    @Field()
+    @Field(() => String)
     title?: string
 
     @IsString()
@@ -41,5 +41,6 @@ export class Language {
     updatedDate: Date
 
     @OneToMany(() => Lesson, (lesson) => lesson.language)
+    @Field(() => [Lesson]!)
     lessons: Lesson[]
 }

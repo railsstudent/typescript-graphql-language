@@ -13,18 +13,18 @@ export class UpdateLanguageInput implements Partial<Language> {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     name?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     nativeName?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     flag?: string
 }
