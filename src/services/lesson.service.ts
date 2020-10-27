@@ -43,7 +43,7 @@ export class LessonService {
                     : query.where('language.nativeName = :nativeName', { nativeName })
             }
         }
-        return query.getMany()
+        return query.orderBy('lesson.name', 'ASC').getMany()
     }
 
     async getLesson(id: string): Promise<Lesson | undefined> {
@@ -78,7 +78,7 @@ export class LessonService {
         if (id) {
             const phrases = await this.phraseRepository
                 .createQueryBuilder('phrase')
-                .innerJoinAndSelect('phrase.lesson', 'lesson')
+                .innerJoin('phrase.lesson', 'lesson')
                 .where('lesson.id = :id', { id })
                 .orderBy('phrase.phrase', 'ASC')
                 .getMany()

@@ -27,6 +27,7 @@ export class Translation {
 
     @OneToOne(() => TranslateLanguage)
     @JoinColumn()
+    @Field(() => TranslateLanguage)
     translationLanguage: TranslateLanguage
 
     @ManyToOne(() => Phrase)

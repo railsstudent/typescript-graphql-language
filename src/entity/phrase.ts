@@ -1,4 +1,3 @@
-import { Translation } from './translation'
 import {
     Column,
     CreateDateColumn,
@@ -12,6 +11,7 @@ import {
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
 import { Lesson } from './lesson'
+import { Translation } from './translation'
 
 @Entity()
 @ObjectType({ description: 'The phrase model' })
@@ -27,9 +27,11 @@ export class Phrase {
     phrase: string
 
     @ManyToOne(() => Lesson)
+    @Field(() => Lesson!)
     lesson: Lesson
 
     @OneToMany(() => Translation, (ret) => ret.phrase)
+    @Field(() => [Translation]!)
     translations: Translation[]
 
     @IsDate()
