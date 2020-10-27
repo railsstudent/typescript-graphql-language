@@ -7,4 +7,7 @@ export class PhrasePaginationArgs {
 
     @Field(() => Int)
     take: number
+
+    @Field(() => String)
+    languageName: string
 }
