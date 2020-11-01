@@ -1,13 +1,13 @@
-import { ArgsType, Field, Int } from 'type-graphql'
+import { ArgsType, Field, ID, Int } from 'type-graphql'
 
 @ArgsType()
 export class PhrasePaginationArgs {
-    @Field(() => Int)
+    @Field(() => ID)
+    lessonId: string
+
+    @Field(() => Int, { nullable: true })
     page: number
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     take: number
-
-    @Field(() => String)
-    languageName: string
 }

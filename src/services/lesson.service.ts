@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Language, Lesson, Phrase } from '../entity'
-import { GetLanguageArgs, AddLessonInput } from './../types'
+import { GetLanguageArgs, AddLessonInput, UpdateLessonInput } from './../types'
 
 @Service()
 export class LessonService {
@@ -16,13 +16,10 @@ export class LessonService {
     ) {}
 
     async getLessons(args: GetLanguageArgs): Promise<Lesson[]> {
-        let query = this.lessonRepository.createQueryBuilder('lesson')
+        let query = this.lessonRepository.createQueryBuilder('lesson').innerJoinAndSelect('lesson.language', 'language')
 
         if (args) {
             const { id = '', name = '', nativeName = '' } = args
-            if (id || name || nativeName) {
-                query = query.innerJoinAndSelect('lesson.language', 'language')
-            }
 
             let hasWhere = false
             if (id) {
@@ -43,7 +40,8 @@ export class LessonService {
                     : query.where('language.nativeName = :nativeName', { nativeName })
             }
         }
-        return query.orderBy('lesson.name', 'ASC').getMany()
+
+        return query.orderBy('language.name', 'ASC').addOrderBy('lesson.name', 'ASC').getMany()
     }
 
     async getLesson(id: string): Promise<Lesson | undefined> {
@@ -88,25 +86,64 @@ export class LessonService {
         return []
     }
 
+    async getNumOfPhrases(id: string): Promise<number> {
+        if (id) {
+            const count = await this.phraseRepository
+                .createQueryBuilder('phrase')
+                .innerJoin('phrase.lesson', 'lesson')
+                .where('lesson.id = :id', { id })
+                .getCount()
+            return count
+        }
+        return 0
+    }
+
+    async isUniqueLessonName(name: string, language: Language) {
+        const { id: languageId, name: languageName } = language
+
+        const isUnique =
+            (await this.lessonRepository
+                .createQueryBuilder('lesson')
+                .innerJoin('lesson.language', 'language')
+                .where('language.id = :languageId', { languageId })
+                .andWhere('lesson.name = :name', { name })
+                .getCount()) <= 0
+
+        if (!isUnique) {
+            throw new Error(`Lesson: ${name} is already taken for ${languageName}`)
+        }
+
+        return isUnique
+    }
+
     async addLesson(input: AddLessonInput): Promise<Lesson> {
-        const language = await this.languageRepository.findOne({ name: input.languageName })
+        const { name, languageName } = input
+        const language = await this.languageRepository.findOne({ name: languageName })
         if (!language) {
             throw new Error('Language does not exist')
         }
 
+        // check uniqueness of the name of lesson
+        await this.isUniqueLessonName(name, language)
+
         const payload = {
-            name: input.name,
+            name,
             language,
         }
         return this.lessonRepository.save(this.lessonRepository.create(payload))
     }
 
-    async updateLesson(input: any): Promise<Lesson | undefined> {
-        const { id, ...body } = input
+    async updateLesson(input: UpdateLessonInput): Promise<Lesson | undefined> {
+        const { id, name } = input
         if (!id) {
             throw new Error('Lesson id is missing')
         }
-        await this.lessonRepository.update(id, body)
+
+        // check uniqueness of lesson name
+        const lesson = await this.lessonRepository.findOneOrFail(id, { relations: ['language'] })
+
+        await this.isUniqueLessonName(name, lesson.language)
+        await this.lessonRepository.update(id, { name })
         return this.lessonRepository.findOne(id)
     }
 }

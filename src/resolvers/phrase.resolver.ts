@@ -14,11 +14,6 @@ export class PhraseResolver {
         return this.service.getPaginatedPhrases(args)
     }
 
-    @Query(() => [Phrase]!)
-    allPhrases(@Args() args: PhrasePaginationArgs): Promise<PaginatedPhrase> {
-        return this.service.getPaginatedPhrases(args)
-    }
-
     @Query(() => Phrase, { nullable: true })
     phraseById(@Arg('phraseId') phraseId: string): Promise<Phrase | undefined> {
         return this.service.getPhrase(phraseId)

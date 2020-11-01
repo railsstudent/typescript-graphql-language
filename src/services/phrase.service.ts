@@ -17,15 +17,18 @@ export class PhraseService {
 
     async getPaginatedPhrases(args: PhrasePaginationArgs): Promise<PaginatedPhrase> {
         try {
-            const { page, take, languageName } = args
-            const [phrases, total] = await this.phraseRepository
+            const { page, take, lessonId } = args
+            let query = await this.phraseRepository
                 .createQueryBuilder('phrase')
                 .innerJoin('phrase.lesson', 'lesson')
-                .innerJoinAndSelect('lesson.language', 'language')
-                .where('language.name = :languageName', { languageName })
-                .skip(page * take)
-                .take(take)
-                .getManyAndCount()
+                .where('lesson.id = :lessonId', { lessonId })
+
+            if (page >= 0 && take >= 0) {
+                query = query.skip(page * take).take(take)
+            }
+
+            const [phrases, total] = await query.getManyAndCount()
+
             return {
                 phrases,
                 total,

@@ -3,17 +3,18 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    Index,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
+    Unique,
     UpdateDateColumn,
 } from 'typeorm'
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Field, ID, ObjectType, Int } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
 import { Language } from './language'
 
 @Entity()
+@Unique(['language.id', 'name'])
 @ObjectType({ description: 'The lesson model' })
 export class Lesson {
     @PrimaryGeneratedColumn('uuid')
@@ -22,7 +23,6 @@ export class Lesson {
 
     @IsString()
     @Column({ type: 'text', nullable: false })
-    @Index({ unique: true })
     @Field({ nullable: false })
     name: string
 
@@ -33,6 +33,9 @@ export class Lesson {
     @OneToMany(() => Phrase, (phrase) => phrase.lesson)
     @Field(() => [Phrase]!)
     phrases: Phrase[]
+
+    @Field(() => Int!)
+    numOfPhrases: number
 
     @IsDate()
     @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP', nullable: false })

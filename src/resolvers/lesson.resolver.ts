@@ -35,6 +35,11 @@ export class LessonResolver {
     }
 
     @FieldResolver()
+    async numOfPhrases(@Root() lesson: Lesson): Promise<number> {
+        return this.service.getNumOfPhrases(lesson.id)
+    }
+
+    @FieldResolver()
     async language(@Root() lesson: Lesson): Promise<Language | undefined> {
         return this.service.findLanguageByLesson(lesson.id)
     }
