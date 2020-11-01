@@ -24,6 +24,11 @@ export class PhraseResolver {
         return this.service.addPhrase(input)
     }
 
+    @Mutation(() => Phrase)
+    updatePhrase(@Arg('data') input: UpdatePhraseInput): Promise<Phrase | undefined> {
+        return this.service.updatePhrase(input)
+    }
+
     @FieldResolver()
     lesson(@Root() phrase: Phrase) {
         return this.service.getLessonByPhrase(phrase.id)

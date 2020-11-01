@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Lesson, PaginatedPhrase, Phrase, Translation } from '../entity'
-import { AddPhraseInput, PhrasePaginationArgs } from '../types'
+import { AddPhraseInput, PhrasePaginationArgs, UpdatePhraseInput } from '../types'
 
 @Service()
 export class PhraseService {
@@ -125,5 +125,32 @@ export class PhraseService {
                 lesson,
             }),
         )
+    }
+
+    async updatePhrase(data: UpdatePhraseInput): Promise<Phrase | undefined> {
+        const { id, phrase } = data
+        if (!id) {
+            throw new Error('Phrase id is missing')
+        }
+
+        if (!phrase) {
+            throw new Error('Phrase is missing')
+        }
+
+        const lesson = await this.lessonRepository
+            .createQueryBuilder('lesson')
+            .innerJoin('lesson.phrases', 'phrases')
+            .where('phrases.id = :id', { id })
+            .getOne()
+
+        if (!lesson) {
+            throw new Error('Lesson does not exist')
+        }
+
+        // check uniqueness of phrase
+        await this.isUniquePhrase(lesson, phrase)
+        await this.phraseRepository.update(id, { phrase })
+
+        return this.phraseRepository.findOne(id)
     }
 }
