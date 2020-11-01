@@ -2,10 +2,10 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    Index,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
+    Unique,
     UpdateDateColumn,
 } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
@@ -14,6 +14,7 @@ import { Lesson } from './lesson'
 import { Translation } from './translation'
 
 @Entity()
+@Unique(['lesson.id', 'phrase'])
 @ObjectType({ description: 'The phrase model' })
 export class Phrase {
     @PrimaryGeneratedColumn('uuid')
@@ -21,7 +22,6 @@ export class Phrase {
     id: string
 
     @IsString()
-    @Index({ unique: true })
     @Column({ type: 'text', nullable: false })
     @Field({ nullable: false })
     phrase: string

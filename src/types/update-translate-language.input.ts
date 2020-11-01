@@ -13,6 +13,6 @@ export class UpdateTranslateLanguageInput implements Partial<TranslateLanguage> 
     @IsDefined()
     @IsNotEmpty()
     @IsString()
-    @Field()
+    @Field(() => String)
     language: string
 }

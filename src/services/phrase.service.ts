@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Lesson, PaginatedPhrase, Phrase, Translation } from '../entity'
-import { PhrasePaginationArgs } from '../types'
+import { AddPhraseInput, PhrasePaginationArgs } from '../types'
 
 @Service()
 export class PhraseService {
@@ -75,7 +75,7 @@ export class PhraseService {
         return undefined
     }
 
-    getTranlations(phraseId: string) {
+    async getTranlations(phraseId: string) {
         return this.translateRepository
             .createQueryBuilder('translate')
             .innerJoin('translate.phrase', 'phrase')
@@ -83,5 +83,47 @@ export class PhraseService {
             .where('phrase.id = :phraseId', { phraseId })
             .orderBy('translateLanguage.language', 'ASC')
             .getMany()
+    }
+
+    async isUniquePhrase(lesson: Lesson, phrase: string) {
+        const { id: lessonId, name } = lesson
+
+        // check uniqueness of phrase
+        const isUnique =
+            (await this.phraseRepository
+                .createQueryBuilder('phrase')
+                .innerJoin('phrase.lesson', 'lesson')
+                .where('lesson.id = :lessonId', { lessonId })
+                .andWhere('phrase.phrase = :phrase', { phrase })
+                .getCount()) <= 0
+
+        if (!isUnique) {
+            throw new Error(`${phrase} already exists in ${name} lesson`)
+        }
+
+        return isUnique
+    }
+
+    async addPhrase(data: AddPhraseInput): Promise<Phrase> {
+        const { lessonId, phrase } = data
+        if (!lessonId) {
+            throw new Error('Lesson id is missing')
+        }
+
+        if (!phrase) {
+            throw new Error('Phrase is missing')
+        }
+
+        const lesson = await this.lessonRepository.findOneOrFail(lessonId)
+
+        // check uniqueness of phrase
+        await this.isUniquePhrase(lesson, phrase)
+
+        return this.phraseRepository.save(
+            this.phraseRepository.create({
+                phrase,
+                lesson,
+            }),
+        )
     }
 }

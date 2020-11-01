@@ -1,18 +1,18 @@
 import { Field, InputType } from 'type-graphql'
 import { IsDefined, IsNotEmpty, IsString } from 'class-validator'
-import { Lesson } from '../entity'
+import { Phrase } from '../entity'
 
-@InputType({ description: 'Add lesson' })
-export class AddLessonInput implements Partial<Lesson> {
+@InputType({ description: 'Add phrase' })
+export class AddPhraseInput implements Partial<Phrase> {
     @IsDefined()
     @IsNotEmpty()
     @IsString()
     @Field(() => String)
-    name: string
+    phrase: string
 
     @IsDefined()
     @IsNotEmpty()
     @IsString()
     @Field(() => String)
-    languageName: string
+    lessonId: string
 }
