@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import { Phrase, Translation, PaginatedPhrase } from '../entity'
 import { PhraseService } from '../services'
-import { AddPhraseInput, PhrasePaginationArgs, UpdatePhraseInput } from '../types'
+import { AddPhraseInput, PhrasePaginatedArgs, UpdatePhraseInput } from '../types'
 
 @Service()
 @Resolver(() => Phrase)
@@ -10,12 +10,12 @@ export class PhraseResolver {
     constructor(private service: PhraseService) {}
 
     @Query(() => PaginatedPhrase)
-    paginatedPhrases(@Args() args: PhrasePaginationArgs): Promise<PaginatedPhrase> {
+    paginatedPhrases(@Args() args: PhrasePaginatedArgs): Promise<PaginatedPhrase> {
         return this.service.getPaginatedPhrases(args)
     }
 
     @Query(() => Phrase, { nullable: true })
-    phraseById(@Arg('phraseId') phraseId: string): Promise<Phrase | undefined> {
+    phraseById(@Arg('id') phraseId: string): Promise<Phrase | undefined> {
         return this.service.getPhrase(phraseId)
     }
 

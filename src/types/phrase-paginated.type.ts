@@ -1,7 +1,7 @@
 import { ArgsType, Field, ID, Int } from 'type-graphql'
 
 @ArgsType()
-export class PhrasePaginationArgs {
+export class PhrasePaginatedArgs {
     @Field(() => ID)
     lessonId: string
 

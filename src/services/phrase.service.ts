@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Lesson, PaginatedPhrase, Phrase, Translation } from '../entity'
-import { AddPhraseInput, PhrasePaginationArgs, UpdatePhraseInput } from '../types'
+import { AddPhraseInput, PhrasePaginatedArgs, UpdatePhraseInput } from '../types'
 
 @Service()
 export class PhraseService {
@@ -15,7 +15,7 @@ export class PhraseService {
         private readonly translateRepository: Repository<Translation>,
     ) {}
 
-    async getPaginatedPhrases(args: PhrasePaginationArgs): Promise<PaginatedPhrase> {
+    async getPaginatedPhrases(args: PhrasePaginatedArgs): Promise<PaginatedPhrase> {
         try {
             const { page, take, lessonId } = args
             let query = await this.phraseRepository
