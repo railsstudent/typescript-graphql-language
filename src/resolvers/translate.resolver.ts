@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver, Args } from 'type-graphql'
+import { Arg, Query, Resolver, Args, Mutation } from 'type-graphql'
 import { Service } from 'typedi'
 import { Translation } from './../entity'
 import { TranslatePaginatedArgs } from './../types'
@@ -13,6 +13,16 @@ export class TranslateResolver {
 
     @Query(() => Translation)
     translation(@Arg('id') id: string) {
+        return null
+    }
+
+    @Mutation(() => Translation)
+    addTranslation() {
+        return null
+    }
+
+    @Mutation(() => Translation)
+    updateTranslation() {
         return null
     }
 }

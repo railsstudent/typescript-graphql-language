@@ -31,6 +31,7 @@ export class Translation {
     translationLanguage: TranslateLanguage
 
     @ManyToOne(() => Phrase)
+    @Field(() => Phrase!)
     phrase: Phrase
 
     @IsDate()
