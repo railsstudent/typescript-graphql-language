@@ -116,4 +116,22 @@ export class TranslateService {
 
     //     return this.phraseRepository.findOne(id)
     // }
+
+    async getTranslationLanguage(translation: Translation): Promise<TranslateLanguage | undefined> {
+        const retTranslation = await this.translateRepository
+            .createQueryBuilder('translation')
+            .innerJoinAndSelect('translation.translationLanguage', 'translationLanguage')
+            .where('translation.id = :translationId', { translationId: translation.id })
+            .getOne()
+
+        return retTranslation?.translationLanguage
+    }
+
+    async getPhrase(translation: Translation): Promise<Phrase | undefined> {
+        return await this.phraseRepository
+            .createQueryBuilder('phrase')
+            .innerJoin('phrase.translations', 'translations')
+            .where('translations.id = :translationId', { translationId: translation.id })
+            .getOne()
+    }
 }
