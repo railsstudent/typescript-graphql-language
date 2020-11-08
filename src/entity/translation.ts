@@ -1,13 +1,4 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-} from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
 import { Phrase } from './phrase'
@@ -25,8 +16,7 @@ export class Translation {
     @Field({ nullable: false })
     translation: string
 
-    @OneToOne(() => TranslateLanguage)
-    @JoinColumn()
+    @ManyToOne(() => TranslateLanguage)
     @Field(() => TranslateLanguage)
     translationLanguage: TranslateLanguage
 
