@@ -10,7 +10,7 @@ export class UpdatePhraseInput implements Partial<Phrase> {
     @Field(() => ID)
     id: string
 
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     @Field(() => String)

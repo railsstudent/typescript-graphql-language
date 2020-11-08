@@ -1,28 +1,26 @@
+import { TranslateService } from './../services/translate.service'
 import { Arg, Query, Resolver, Args, Mutation } from 'type-graphql'
 import { Service } from 'typedi'
-import { Translation } from './../entity'
-import { TranslatePaginatedArgs } from './../types'
+import { PaginatedTranslation, Translation } from './../entity'
+import { TranslationPaginatedArgs, AddTranslationInput, UpdateTranslationInput } from './../types'
 
 @Service()
 @Resolver(() => Translation)
 export class TranslateResolver {
-    @Query(() => [Translation]!)
-    paginatedTranslations(@Args() id: TranslatePaginatedArgs) {
-        return []
-    }
+    constructor(private service: TranslateService) {}
 
-    @Query(() => Translation)
-    translation(@Arg('id') id: string) {
-        return null
+    @Query(() => PaginatedTranslation)
+    paginatedTranslations(@Args() args: TranslationPaginatedArgs): Promise<PaginatedTranslation> {
+        return this.service.getPaginatedTranslations(args)
     }
 
     @Mutation(() => Translation)
-    addTranslation() {
-        return null
+    addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation | undefined> {
+        return Promise.resolve(undefined)
     }
 
     @Mutation(() => Translation)
-    updateTranslation() {
-        return null
+    updateTranslation(@Arg('data') input: UpdateTranslationInput): Promise<Translation | undefined> {
+        return Promise.resolve(undefined)
     }
 }

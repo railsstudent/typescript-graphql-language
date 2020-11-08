@@ -39,19 +39,19 @@ export class PhraseService {
         }
     }
 
-    async getPhrases(language: string): Promise<Phrase[]> {
-        try {
-            return this.phraseRepository
-                .createQueryBuilder('phrase')
-                .innerJoin('phrase.lesson', 'lesson')
-                .innerJoinAndSelect('lesson.language', 'language')
-                .where('language.name = :language', { language })
-                .getMany()
-        } catch (e) {
-            console.log(e)
-            return []
-        }
-    }
+    // async getPhrases(language: string): Promise<Phrase[]> {
+    //     try {
+    //         return this.phraseRepository
+    //             .createQueryBuilder('phrase')
+    //             .innerJoin('phrase.lesson', 'lesson')
+    //             .innerJoinAndSelect('lesson.language', 'language')
+    //             .where('language.name = :language', { language })
+    //             .getMany()
+    //     } catch (e) {
+    //         console.log(e)
+    //         return []
+    //     }
+    // }
 
     async getPhrase(phraseId: string): Promise<Phrase | undefined> {
         try {

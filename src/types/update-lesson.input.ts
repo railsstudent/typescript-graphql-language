@@ -10,7 +10,7 @@ export class UpdateLessonInput implements Partial<Lesson> {
     @Field(() => ID)
     id: string
 
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     @Field(() => String)
