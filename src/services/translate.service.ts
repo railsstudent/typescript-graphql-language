@@ -93,8 +93,11 @@ export class TranslateService {
     async updateTranslate(data: UpdateTranslationInput): Promise<Translation | undefined> {
         const { id, translation = null, translationLanguageId = null, phraseId = null } = data
         if (!id) {
-            throw new Error('Phrase id is missing')
+            throw new Error('Translation id is missing')
         }
+
+        // const query = this.translateRepository.createQueryBuilder('translation')
+        // query.
 
         // const lesson = await this.lessonRepository
         //     .createQueryBuilder('lesson')
