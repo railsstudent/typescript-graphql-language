@@ -10,27 +10,27 @@ export class TranslateResolver {
     constructor(private service: TranslateService) {}
 
     @Query(() => PaginatedTranslation)
-    paginatedTranslations(@Args() args: TranslationPaginatedArgs): Promise<PaginatedTranslation> {
-        return this.service.getPaginatedTranslations(args)
+    async paginatedTranslations(@Args() args: TranslationPaginatedArgs): Promise<PaginatedTranslation> {
+        return await this.service.getPaginatedTranslations(args)
     }
 
     @Mutation(() => Translation)
-    addTranslation(@Arg('data') _input: AddTranslationInput): Promise<Translation | undefined> {
-        return Promise.resolve(undefined)
+    addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation | undefined> {
+        return this.service.addTranslation(input)
     }
 
     @Mutation(() => Translation)
-    updateTranslation(@Arg('data') _input: UpdateTranslationInput): Promise<Translation | undefined> {
-        return Promise.resolve(undefined)
+    async updateTranslation(@Arg('data') _input: UpdateTranslationInput): Promise<Translation | undefined> {
+        return await Promise.resolve(undefined)
     }
 
     @FieldResolver()
-    phrase(@Root() translation: Translation): Promise<Phrase | undefined> {
-        return this.service.getPhrase(translation)
+    async phrase(@Root() translation: Translation): Promise<Phrase | undefined> {
+        return await this.service.getPhrase(translation)
     }
 
     @FieldResolver()
-    translationLanguage(@Root() translation: Translation): Promise<TranslateLanguage | undefined> {
-        return this.service.getTranslationLanguage(translation)
+    async translationLanguage(@Root() translation: Translation): Promise<TranslateLanguage | undefined> {
+        return await this.service.getTranslationLanguage(translation)
     }
 }

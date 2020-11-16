@@ -10,22 +10,24 @@ export class TranslationLanguageResolver {
     constructor(private service: TranslationLanguageService) {}
 
     @Query(() => [TranslateLanguage]!)
-    translateLanguages(): Promise<TranslateLanguage[]> {
-        return this.service.getLanguages()
+    async translateLanguages(): Promise<TranslateLanguage[]> {
+        return await this.service.getLanguages()
     }
 
     @Query(() => TranslateLanguage, { nullable: true })
-    translateLanguage(@Args() args: GetTranslationLanguageArgs): Promise<TranslateLanguage | undefined> {
-        return this.service.getLanguage(args)
+    async translateLanguage(@Args() args: GetTranslationLanguageArgs): Promise<TranslateLanguage | undefined> {
+        return await this.service.getLanguage(args)
     }
 
     @Mutation(() => TranslateLanguage!)
-    addTranslateLanguage(@Arg('data') input: AddTranslateLanguageInput): Promise<TranslateLanguage> {
-        return this.service.addLanguage(input)
+    async addTranslateLanguage(@Arg('data') input: AddTranslateLanguageInput): Promise<TranslateLanguage> {
+        return await this.service.addLanguage(input)
     }
 
     @Mutation(() => TranslateLanguage, { nullable: false })
-    updateTranslateLanguage(@Arg('data') input: UpdateTranslateLanguageInput): Promise<TranslateLanguage | undefined> {
-        return this.service.updateLanguage(input)
+    async updateTranslateLanguage(
+        @Arg('data') input: UpdateTranslateLanguageInput,
+    ): Promise<TranslateLanguage | undefined> {
+        return await this.service.updateLanguage(input)
     }
 }

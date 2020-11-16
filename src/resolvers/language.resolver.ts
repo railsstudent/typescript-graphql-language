@@ -10,23 +10,23 @@ export class LanguageResolver {
     constructor(private service: LanguageService, private lessonService: LessonService) {}
 
     @Query(() => [Language]!)
-    languages(): Promise<Language[]> {
-        return this.service.getLanguages()
+    async languages(): Promise<Language[]> {
+        return await this.service.getLanguages()
     }
 
     @Query(() => Language, { nullable: true })
-    language(@Args() args: GetLanguageArgs): Promise<Language | undefined> {
-        return this.service.getLanguage(args)
+    async language(@Args() args: GetLanguageArgs): Promise<Language | undefined> {
+        return await this.service.getLanguage(args)
     }
 
     @Mutation(() => Language!)
-    addLanguage(@Arg('data') input: AddLanguageInput): Promise<Language> {
-        return this.service.addLanguage(input)
+    async addLanguage(@Arg('data') input: AddLanguageInput): Promise<Language> {
+        return await this.service.addLanguage(input)
     }
 
     @Mutation(() => Language!)
-    updateLanguage(@Arg('data') input: UpdateLanguageInput): Promise<Language | undefined> {
-        return this.service.updateLanguage(input)
+    async updateLanguage(@Arg('data') input: UpdateLanguageInput): Promise<Language | undefined> {
+        return await this.service.updateLanguage(input)
     }
 
     @FieldResolver()
@@ -36,7 +36,7 @@ export class LanguageResolver {
     }
 
     @FieldResolver()
-    lessons(@Root() language: Language): Promise<Lesson[]> {
-        return this.lessonService.getLessons({ id: language.id })
+    async lessons(@Root() language: Language): Promise<Lesson[]> {
+        return await this.lessonService.getLessons({ id: language.id })
     }
 }

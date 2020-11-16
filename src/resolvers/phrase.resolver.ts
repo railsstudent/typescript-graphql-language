@@ -10,28 +10,28 @@ export class PhraseResolver {
     constructor(private service: PhraseService, private translateService: TranslateService) {}
 
     @Query(() => PaginatedPhrase)
-    paginatedPhrases(@Args() args: PhrasePaginatedArgs): Promise<PaginatedPhrase> {
-        return this.service.getPaginatedPhrases(args)
+    async paginatedPhrases(@Args() args: PhrasePaginatedArgs): Promise<PaginatedPhrase> {
+        return await this.service.getPaginatedPhrases(args)
     }
 
     @Query(() => Phrase, { nullable: true })
-    phraseById(@Arg('id') phraseId: string): Promise<Phrase | undefined> {
-        return this.service.getPhrase(phraseId)
+    async phraseById(@Arg('id') phraseId: string): Promise<Phrase | undefined> {
+        return await this.service.getPhrase(phraseId)
     }
 
     @Mutation(() => Phrase)
-    addPhrase(@Arg('data') input: AddPhraseInput): Promise<Phrase> {
-        return this.service.addPhrase(input)
+    async addPhrase(@Arg('data') input: AddPhraseInput): Promise<Phrase> {
+        return await this.service.addPhrase(input)
     }
 
     @Mutation(() => Phrase)
-    updatePhrase(@Arg('data') input: UpdatePhraseInput): Promise<Phrase | undefined> {
-        return this.service.updatePhrase(input)
+    async updatePhrase(@Arg('data') input: UpdatePhraseInput): Promise<Phrase | undefined> {
+        return await this.service.updatePhrase(input)
     }
 
     @FieldResolver()
-    lesson(@Root() phrase: Phrase) {
-        return this.service.getLessonByPhrase(phrase.id)
+    async lesson(@Root() phrase: Phrase) {
+        return await this.service.getLessonByPhrase(phrase.id)
     }
 
     @FieldResolver()
