@@ -11,7 +11,7 @@ export class TranslateService {
         private readonly translateRepository: Repository<Translation>,
         @InjectRepository(Phrase)
         private readonly phraseRepository: Repository<Phrase>,
-        @InjectRepository(Phrase)
+        @InjectRepository(TranslateLanguage)
         private readonly translateLanguageRepository: Repository<TranslateLanguage>,
     ) {}
 

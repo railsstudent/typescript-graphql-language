@@ -1,8 +1,8 @@
-import { ArgsType, Field, ID } from 'type-graphql'
+import { ArgsType, Field } from 'type-graphql'
 
 @ArgsType()
 export class GetTranslationLanguageArgs {
-    @Field(() => ID, { nullable: true })
+    @Field(() => Number, { nullable: true })
     id?: number
 
     @Field(() => String, { nullable: true })

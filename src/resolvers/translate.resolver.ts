@@ -15,7 +15,7 @@ export class TranslateResolver {
     }
 
     @Mutation(() => Translation)
-    addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation | undefined> {
+    addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation> {
         return this.service.addTranslation(input)
     }
 
