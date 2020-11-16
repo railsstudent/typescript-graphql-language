@@ -1,4 +1,4 @@
-import { IsDefined, IsNotEmpty, IsString, IsOptional } from 'class-validator'
+import { IsDefined, IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator'
 import { Field, ID, InputType } from 'type-graphql'
 import { Translation } from '../entity/translation'
 
@@ -18,13 +18,13 @@ export class UpdateTranslationInput implements Partial<Translation> {
 
     @IsOptional()
     @IsNotEmpty()
-    @IsString()
-    @Field(() => String, { nullable: true })
-    translationLanguageId?: string
+    @IsInt()
+    @Field(() => Number, { nullable: true })
+    translationLanguageId?: number
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @Field(() => String, { nullable: true })
+    @Field(() => ID, { nullable: true })
     phraseId?: string
 }

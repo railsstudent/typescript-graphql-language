@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Translation, PaginatedTranslation, Phrase, TranslateLanguage } from '../entity'
-import { TranslationPaginatedArgs, AddTranslationInput } from './../types'
+import { TranslationPaginatedArgs, AddTranslationInput, UpdateTranslationInput } from './../types'
 
 @Service()
 export class TranslateService {
@@ -81,8 +81,8 @@ export class TranslateService {
         // check uniqueness of phrase
         await this.isUniqueTranslation(phrase, tranLanguage, translation)
 
-        return this.translateRepository.save(
-            this.translateRepository.create({
+        return await this.translateRepository.save(
+            await this.translateRepository.create({
                 translation,
                 phrase,
                 translationLanguage: tranLanguage,
@@ -90,32 +90,28 @@ export class TranslateService {
         )
     }
 
-    // async updatePhrase(data: UpdateTranslationInput): Promise<Translation | undefined> {
-    //     const { id, translation, translationLanguageId, phraseId } = data
-    //     if (!id) {
-    //         throw new Error('Phrase id is missing')
-    //     }
+    async updateTranslate(data: UpdateTranslationInput): Promise<Translation | undefined> {
+        const { id, translation = null, translationLanguageId = null, phraseId = null } = data
+        if (!id) {
+            throw new Error('Phrase id is missing')
+        }
 
-    //     if (!phrase) {
-    //         throw new Error('Phrase is missing')
-    //     }
+        // const lesson = await this.lessonRepository
+        //     .createQueryBuilder('lesson')
+        //     .innerJoin('lesson.phrases', 'phrases')
+        //     .where('phrases.id = :id', { id })
+        //     .getOne()
 
-    //     const lesson = await this.lessonRepository
-    //         .createQueryBuilder('lesson')
-    //         .innerJoin('lesson.phrases', 'phrases')
-    //         .where('phrases.id = :id', { id })
-    //         .getOne()
+        // if (!lesson) {
+        //     throw new Error('Lesson does not exist')
+        // }
 
-    //     if (!lesson) {
-    //         throw new Error('Lesson does not exist')
-    //     }
+        // // check uniqueness of phrase
+        // await this.isUniquePhrase(lesson, phrase)
+        // await this.phraseRepository.update(id, { phrase })
 
-    //     // check uniqueness of phrase
-    //     await this.isUniquePhrase(lesson, phrase)
-    //     await this.phraseRepository.update(id, { phrase })
-
-    //     return this.phraseRepository.findOne(id)
-    // }
+        return await this.translateRepository.findOne(id)
+    }
 
     async getTranslationLanguage(translation: Translation): Promise<TranslateLanguage | undefined> {
         const retTranslation = await this.translateRepository
@@ -124,7 +120,7 @@ export class TranslateService {
             .where('translation.id = :translationId', { translationId: translation.id })
             .getOne()
 
-        return retTranslation?.translationLanguage
+        return await retTranslation?.translationLanguage
     }
 
     async getPhrase(translation: Translation): Promise<Phrase | undefined> {
