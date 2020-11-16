@@ -1,7 +1,7 @@
 import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
-import { Lesson, PaginatedPhrase, Phrase, Translation } from '../entity'
+import { Lesson, PaginatedPhrase, Phrase } from '../entity'
 import { AddPhraseInput, PhrasePaginatedArgs, UpdatePhraseInput } from '../types'
 
 @Service()
@@ -11,8 +11,6 @@ export class PhraseService {
         private readonly phraseRepository: Repository<Phrase>,
         @InjectRepository(Lesson)
         private readonly lessonRepository: Repository<Lesson>,
-        @InjectRepository(Translation)
-        private readonly translateRepository: Repository<Translation>,
     ) {}
 
     async getPaginatedPhrases(args: PhrasePaginatedArgs): Promise<PaginatedPhrase> {
@@ -39,20 +37,6 @@ export class PhraseService {
         }
     }
 
-    // async getPhrases(language: string): Promise<Phrase[]> {
-    //     try {
-    //         return this.phraseRepository
-    //             .createQueryBuilder('phrase')
-    //             .innerJoin('phrase.lesson', 'lesson')
-    //             .innerJoinAndSelect('lesson.language', 'language')
-    //             .where('language.name = :language', { language })
-    //             .getMany()
-    //     } catch (e) {
-    //         console.log(e)
-    //         return []
-    //     }
-    // }
-
     async getPhrase(phraseId: string): Promise<Phrase | undefined> {
         try {
             return phraseId ? await this.phraseRepository.findOne(phraseId) : undefined
@@ -73,16 +57,6 @@ export class PhraseService {
             return lesson
         }
         return undefined
-    }
-
-    async getTranlations(phraseId: string) {
-        return this.translateRepository
-            .createQueryBuilder('translate')
-            .innerJoin('translate.phrase', 'phrase')
-            .innerJoinAndSelect('translate.translationLanguage', 'translateLanguage')
-            .where('phrase.id = :phraseId', { phraseId })
-            .orderBy('translateLanguage.language', 'ASC')
-            .getMany()
     }
 
     async isUniquePhrase(lesson: Lesson, phrase: string) {
