@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Field, ObjectType } from 'type-graphql'
 import { IsDate, IsInt, IsString } from 'class-validator'
 
 @Entity()
@@ -7,7 +7,7 @@ import { IsDate, IsInt, IsString } from 'class-validator'
 export class TranslateLanguage {
     @PrimaryGeneratedColumn('increment')
     @IsInt()
-    @Field(() => ID)
+    @Field(() => Number)
     id: number
 
     @IsString()
