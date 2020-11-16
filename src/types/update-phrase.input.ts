@@ -1,6 +1,6 @@
 import { Field, ID, InputType } from 'type-graphql'
-import { IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator'
-import { Lesson, Phrase } from './../entity'
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator'
+import { Phrase } from './../entity'
 
 @InputType({ description: 'Update phrase' })
 export class UpdatePhraseInput implements Partial<Phrase> {

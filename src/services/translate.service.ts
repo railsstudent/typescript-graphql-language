@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
 import { Translation, PaginatedTranslation, Phrase, TranslateLanguage } from '../entity'
-import { TranslationPaginatedArgs, AddTranslationInput, UpdateTranslationInput } from './../types'
+import { TranslationPaginatedArgs, AddTranslationInput } from './../types'
 
 @Service()
 export class TranslateService {

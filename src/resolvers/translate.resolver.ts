@@ -15,12 +15,12 @@ export class TranslateResolver {
     }
 
     @Mutation(() => Translation)
-    addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation | undefined> {
+    addTranslation(@Arg('data') _input: AddTranslationInput): Promise<Translation | undefined> {
         return Promise.resolve(undefined)
     }
 
     @Mutation(() => Translation)
-    updateTranslation(@Arg('data') input: UpdateTranslationInput): Promise<Translation | undefined> {
+    updateTranslation(@Arg('data') _input: UpdateTranslationInput): Promise<Translation | undefined> {
         return Promise.resolve(undefined)
     }
 
