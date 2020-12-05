@@ -15,13 +15,13 @@ export class TranslateResolver {
     }
 
     @Mutation(() => Translation)
-    addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation> {
-        return this.service.addTranslation(input)
+    async addTranslation(@Arg('data') input: AddTranslationInput): Promise<Translation> {
+        return await this.service.addTranslation(input)
     }
 
     @Mutation(() => Translation)
-    async updateTranslation(@Arg('data') _input: UpdateTranslationInput): Promise<Translation | undefined> {
-        return await Promise.resolve(undefined)
+    async updateTranslation(@Arg('data') input: UpdateTranslationInput): Promise<Translation | undefined> {
+        return await this.service.updateTranslation(input)
     }
 
     @FieldResolver()

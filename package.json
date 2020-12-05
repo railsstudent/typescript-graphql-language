@@ -27,7 +27,7 @@
         "docker-compose",
         "typeorm",
         "type-graphql",
-        "postgreSql"
+        "postgresql"
     ],
     "author": "",
     "license": "MIT",

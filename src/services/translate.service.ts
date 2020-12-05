@@ -39,10 +39,9 @@ export class TranslateService {
         }
     }
 
-    async isUniqueTranslation(phrase: Phrase, tranlsateLanguage: TranslateLanguage, translate: string) {
-        // const { id: lessonId, name } = lesson
+    async isUniqueTranslation(phrase: Phrase, translateLanguage: TranslateLanguage) {
         const { id: phraseId, phrase: strPhrase } = phrase
-        const { id: translateLanguageId } = tranlsateLanguage
+        const { id: translateLanguageId } = translateLanguage
 
         // // check uniqueness of translation
         const isUnique =
@@ -52,11 +51,33 @@ export class TranslateService {
                 .innerJoin('translate.translationLanguage', 'translationLanguage')
                 .where('phrase.id = :phraseId', { phraseId })
                 .andWhere('translationLanguage.id = :translateLanguageId', { translateLanguageId })
-                .andWhere('translate.translation = :translate', { translate })
+                .andWhere('translate.id IS NOT NULL')
                 .getCount()) <= 0
 
         if (!isUnique) {
-            throw new Error(`Translation "${translate}" has already defined for phrase:  ${strPhrase}`)
+            throw new Error(`Phrase "${strPhrase}" has other translation in ${translateLanguage.language}`)
+        }
+
+        return isUnique
+    }
+
+    async hasOtherTranslation(id: string, phrase: Phrase, translateLanguage: TranslateLanguage) {
+        const { id: phraseId, phrase: strPhrase } = phrase
+        const { id: translateLanguageId } = translateLanguage
+
+        // check uniqueness of translation
+        const isUnique =
+            (await this.translateRepository
+                .createQueryBuilder('translate')
+                .innerJoin('translate.phrase', 'phrase')
+                .innerJoin('translate.translationLanguage', 'translationLanguage')
+                .where('phrase.id = :phraseId', { phraseId })
+                .andWhere('translationLanguage.id = :translateLanguageId', { translateLanguageId })
+                .andWhere('translate.id <> :id', { id })
+                .getCount()) <= 0
+
+        if (!isUnique) {
+            throw new Error(`Phrase "${strPhrase}" has other translation in ${translateLanguage.language}`)
         }
 
         return isUnique
@@ -80,7 +101,7 @@ export class TranslateService {
         const tranLanguage = await this.translateLanguageRepository.findOneOrFail(translationLanguageId)
 
         // check uniqueness of translation
-        await this.isUniqueTranslation(phrase, tranLanguage, translation)
+        await this.isUniqueTranslation(phrase, tranLanguage)
 
         return await this.translateRepository.save(
             await this.translateRepository.create({
@@ -91,31 +112,57 @@ export class TranslateService {
         )
     }
 
-    async updateTranslate(_data: UpdateTranslationInput): Promise<Translation | undefined> {
-        // const { id, translation = null, translationLanguageId = null, phraseId = null } = data
-        // if (!id) {
-        //     throw new Error('Translation id is missing')
-        // }
+    async updateTranslation(data: UpdateTranslationInput): Promise<Translation | undefined> {
+        console.log('updateTranslation -> data', data)
+        const { id, translation = null, translationLanguageId = null, phraseId = null } = data
+        if (!id) {
+            throw new Error('Translation id is missing')
+        }
 
-        // const query = this.translateRepository.createQueryBuilder('translation')
-        // query.
+        const currentTranslation = await this.translateRepository
+            .createQueryBuilder('translate')
+            .innerJoinAndSelect('translate.phrase', 'phrase')
+            .innerJoinAndSelect('translate.translationLanguage', 'translationLanguage')
+            .where('translate.id = :id', { id })
+            .getOne()
 
-        // const lesson = await this.lessonRepository
-        //     .createQueryBuilder('lesson')
-        //     .innerJoin('lesson.phrases', 'phrases')
-        //     .where('phrases.id = :id', { id })
-        //     .getOne()
+        if (!currentTranslation) {
+            throw new Error('Translation does not exist')
+        }
 
-        // if (!lesson) {
-        //     throw new Error('Lesson does not exist')
-        // }
+        const {
+            phrase: currentPhrase,
+            translationLanguage: currentTranLang,
+            translation: strTranslation,
+        } = currentTranslation
 
-        // // check uniqueness of phrase
-        // await this.isUniquePhrase(lesson, phrase)
-        // await this.phraseRepository.update(id, { phrase })
+        const phrase = phraseId ? await this.phraseRepository.findOne(phraseId) : currentPhrase
+        if (!phrase) {
+            throw new Error('New phrase does not exist')
+        }
 
-        // return await this.translateRepository.findOne(id)
-        return undefined
+        const tranLanguage = translationLanguageId
+            ? await this.translateLanguageRepository.findOne(translationLanguageId)
+            : currentTranLang
+        if (!tranLanguage) {
+            throw new Error('New translation language does not exist')
+        }
+
+        const updatedTranslation = translation ? translation : strTranslation
+
+        console.log('phrase', phrase, 'tranLanguage', tranLanguage, 'updatedTranslation', updatedTranslation)
+
+        await this.hasOtherTranslation(id, phrase, tranLanguage)
+
+        await this.translateRepository.update(id, {
+            translation: updatedTranslation,
+            phrase,
+            translationLanguage: tranLanguage,
+        })
+
+        return await this.translateRepository.findOne(id, {
+            relations: ['phrase', 'translationLanguage'],
+        })
     }
 
     async getTranslationLanguage(translation: Translation): Promise<TranslateLanguage | undefined> {
