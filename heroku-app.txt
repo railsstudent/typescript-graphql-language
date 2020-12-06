@@ -1,2 +1,10 @@
 enigmatic-chamber-32995
 heroku git:remote -a enigmatic-chamber-32995
+
+# git command
+git push heroku HEAD:master
+
+
+# start heroku in bash
+heroku login
+heroku run bash
