@@ -9,7 +9,7 @@ build:
     FOO: bar
 release:
   image: web
-  command: npm run typeorm migration:run
+  command: ['npm run typeorm migration:run']
 
 run:
   web: npm start
