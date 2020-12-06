@@ -33,17 +33,6 @@ export class NewEntities1603722388617 implements MigrationInterface {
         await queryRunner.query(
             `ALTER TABLE "lesson" ADD CONSTRAINT "FK_d56e101695dc9292af226db76b2" FOREIGN KEY ("languageId") REFERENCES "language"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
         )
-
-        const [{ id }] = await queryRunner.query(`SELECT id FROM "language" WHERE "name" = 'Spanish' limit 1`)
-        await queryRunner.query(
-            `INSERT INTO "translate_language"("language") values ('English'), ('Traditional Chinese')`,
-        )
-        await queryRunner.query(`INSERT INTO "lesson"("name", "languageId") values ('Gender', '${id}')`)
-
-        const [{ id: lessonId }] = await queryRunner.query(`SELECT id FROM "lesson" WHERE "name" = 'Gender' limit 1`)
-        await queryRunner.query(
-            `INSERT INTO "phrase"("phrase", "lessonId") values ('el niño', '${lessonId}'), ('la niña', '${lessonId}'), ('un niño', '${lessonId}'), ('una niña', '${lessonId}')`,
-        )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

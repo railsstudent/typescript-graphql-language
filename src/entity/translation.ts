@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm'
 import { Field, ID, ObjectType } from 'type-graphql'
 import { IsDate, IsString } from 'class-validator'
 import { Phrase } from './phrase'
@@ -6,6 +6,7 @@ import { TranslateLanguage } from './translate-language'
 
 @Entity()
 @ObjectType({ description: 'The translation model' })
+@Unique(['translationLanguage', 'phrase'])
 export class Translation {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
