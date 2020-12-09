@@ -73,3 +73,17 @@ http://localhost:4000/graphql
 ```bash
 npm start
 ```
+
+## Build docker image
+
+```bash
+docker build --tag typescript-graphql-language:1.0 .
+```
+
+##
+
+### Resources:
+
+```
+https://dev.to/pacheco/how-to-dockerize-a-node-app-and-deploy-to-heroku-3cch
+```
