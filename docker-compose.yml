@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.7'
 
 services:
   postgres:
@@ -13,6 +13,8 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    networks:
+      - type-graphql-network
 
   pgadmin:
     container_name: pgadmin_container
@@ -27,7 +29,14 @@ services:
     links:
       - "postgres:pgsql-server"
     restart: always
+    networks:
+      - type-graphql-network
 
 volumes:
   postgres:
   pgadmin:
+
+networks:
+  type-graphql-network:
+    name: type-graphql-network
+    
