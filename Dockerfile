@@ -33,6 +33,7 @@ COPY /app/node_modules/ ./dist/
 COPY /app/ormconfig.js ./ormconfig.js
 
 # database migration. this step does not work
+# WORKDIR /
 #RUN npm run typeorm migration:run
 
 CMD ["npm", "start"]
