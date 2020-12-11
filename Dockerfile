@@ -27,7 +27,12 @@ RUN npm run build
 # check files list
 RUN ls -al
 
-# database migration
+# COPY failed: stat /var/lib/docker/tmp/docker-builder278767749/app/dist: no such file or directory. Why?
+COPY /app/dist/ ./dist/
+COPY /app/node_modules/ ./dist/
+COPY /app/ormconfig.js ./ormconfig.js
+
+# database migration. this step does not work
 #RUN npm run typeorm migration:run
 
 CMD ["npm", "start"]
