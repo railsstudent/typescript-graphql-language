@@ -34,8 +34,8 @@ export class Lesson {
     @Field(() => [Phrase]!)
     phrases: Phrase[]
 
-    @Field(() => Int!)
-    numOfPhrases: number
+    // @Field(() => Int!)
+    // numOfPhrases: number
 
     @IsDate()
     @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP', nullable: false })

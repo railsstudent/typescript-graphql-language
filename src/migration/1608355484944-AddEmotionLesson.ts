@@ -23,7 +23,11 @@ export class AddEmotionLesson1608355484944 implements MigrationInterface {
                 ,('8f38344c-9d3c-4e50-b20a-6be15060b930', 'Ellos no son simpáticos conmigo', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18')  
                 ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'Sara, ¿por qué te sientes triste?', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18')  
                 ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'Ana siempre está feliz en la clase de francés', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18')  
-                ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'Lo siento, estoy muy aburrido en este concierto', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18')  
+                ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'Lo siento, estoy muy aburrido en este concierto', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18') 
+                ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'Siempre me siento cansado', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18') 
+                ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'A veces me siento un poco cansada en la mañana', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18') 
+                ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'Rafael, ¿no estás emocionado?', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18')  
+                ,('1f065ee6-ffe0-4580-8693-e1ffd386d0f6', 'También te sientes feliz', '7b8b8010-5e26-49c3-bf6c-29e60a6fbf18')  
                 ;
             `,
         )
@@ -47,6 +51,9 @@ export class AddEmotionLesson1608355484944 implements MigrationInterface {
                 ,('b6a482c9-0936-4381-b461-da8b82090347', 'Ana is always happy in French class', 1, '1f065ee6-ffe0-4580-8693-e1ffd386d0f6')
                 ,('b6a482c9-0936-4381-b461-da8b82090347', 'I am sorry, I am very bored at this concert', 1, '1f065ee6-ffe0-4580-8693-e1ffd386d0f6')
                 ,('b6a482c9-0936-4381-b461-da8b82090347', 'I always feel tired', 1, '1f065ee6-ffe0-4580-8693-e1ffd386d0f6')
+                ,('b6a482c9-0936-4381-b461-da8b82090347', 'Sometimes I feel a little tired in the morning', 1, '1f065ee6-ffe0-4580-8693-e1ffd386d0f6')
+                ,('b6a482c9-0936-4381-b461-da8b82090347', 'Rafael, aren't you excited?', 1, '1f065ee6-ffe0-4580-8693-e1ffd386d0f6')
+                ,('b6a482c9-0936-4381-b461-da8b82090347', 'You also feel happy', 1, '1f065ee6-ffe0-4580-8693-e1ffd386d0f6')
                 
                 ,('ac973735-8e77-4c6e-a065-090b9a3ebed9', '我叫瑪麗', 2, '0b108388-f8b8-4703-a45f-e1548e9e20f8')
                 ,('5236000a-5658-43a7-9755-7a57cbc0eee2', '你叫瑪麗', 2, '1a554f55-6c45-4637-9b01-3378fc897acb')
