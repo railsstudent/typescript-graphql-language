@@ -87,3 +87,15 @@ docker build --tag typescript-graphql-language:1.0 .
 ```
 https://dev.to/pacheco/how-to-dockerize-a-node-app-and-deploy-to-heroku-3cch
 ```
+
+## Generate SQL statements for a new lesson
+
+Go to scripts directory to compile typescript file
+
+```
+../node_modules/.bin/tsc gen-newlesson-sql.ts
+```
+
+```
+node gen-newlesson-sql.js
+```
