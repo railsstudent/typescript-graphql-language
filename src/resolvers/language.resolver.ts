@@ -2,7 +2,7 @@ import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-
 import { Service } from 'typedi'
 import { AddLanguageInput, GetLanguageArgs, UpdateLanguageInput } from './../types'
 import { LanguageService, LessonService } from './../services/'
-import { Language, Lesson } from './../entity'
+import { Language, LessonTotal } from './../entity'
 
 @Service()
 @Resolver(() => Language)
@@ -36,7 +36,7 @@ export class LanguageResolver {
     }
 
     @FieldResolver()
-    async lessons(@Root() language: Language): Promise<Lesson[]> {
+    async lessons(@Root() language: Language): Promise<LessonTotal> {
         return await this.lessonService.getLessons({ id: language.id })
     }
 }

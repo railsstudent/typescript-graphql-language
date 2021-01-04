@@ -1,7 +1,7 @@
 import { Service } from 'typedi'
 import { Repository } from 'typeorm'
 import { InjectRepository } from 'typeorm-typedi-extensions'
-import { Language, Lesson, Phrase } from '../entity'
+import { Language, Lesson, Phrase, LessonTotal } from '../entity'
 import { GetLanguageArgs, AddLessonInput, UpdateLessonInput } from './../types'
 
 @Service()
@@ -15,7 +15,7 @@ export class LessonService {
         private readonly languageRepository: Repository<Language>,
     ) {}
 
-    async getLessons(args: GetLanguageArgs): Promise<Lesson[]> {
+    async getLessons(args: GetLanguageArgs): Promise<LessonTotal> {
         let query = this.lessonRepository.createQueryBuilder('lesson').innerJoinAndSelect('lesson.language', 'language')
 
         if (args) {
@@ -41,7 +41,14 @@ export class LessonService {
             }
         }
 
-        return query.orderBy('language.name', 'ASC').addOrderBy('lesson.name', 'ASC').getMany()
+        const [lessons, total] = await query
+            .orderBy('language.name', 'ASC')
+            .addOrderBy('lesson.name', 'ASC')
+            .getManyAndCount()
+        return {
+            total,
+            lessons,
+        }
     }
 
     async getLesson(id: string): Promise<Lesson | undefined> {

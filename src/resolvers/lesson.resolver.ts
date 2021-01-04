@@ -1,7 +1,7 @@
 import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import { Service } from 'typedi'
 import { LessonService } from '../services'
-import { Language, Lesson, Phrase } from './../entity'
+import { Language, Lesson, Phrase, LessonTotal } from './../entity'
 import { GetLanguageArgs, AddLessonInput, UpdateLessonInput } from './../types'
 
 @Service()
@@ -9,8 +9,8 @@ import { GetLanguageArgs, AddLessonInput, UpdateLessonInput } from './../types'
 export class LessonResolver {
     constructor(private service: LessonService) {}
 
-    @Query(() => [Lesson]!)
-    async lessons(@Args() args: GetLanguageArgs): Promise<Lesson[]> {
+    @Query(() => LessonTotal!)
+    async lessons(@Args() args: GetLanguageArgs): Promise<LessonTotal> {
         return await this.service.getLessons(args)
     }
 
