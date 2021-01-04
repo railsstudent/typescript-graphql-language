@@ -2,75 +2,78 @@
 exports.__esModule = true
 var uuid_1 = require('uuid')
 function createStatements() {
-    var lesson = 'Emotion'
+    var lesson = 'Which one 1'
     var phrases = [
-        'Estoy contento con mis zapatos',
-        'Tú estás preocupado por la prueba',
-        'El bebé está enfermo y necesita más leche',
-        'La chica tiene un perro y está muy emocionada',
-        'Estoy muy emocionado',
-        'Me siento muy contento contigo, Ana',
-        '¿Te sientes enfermo, Roberto?',
-        'Mi hermana siempre está aburrida',
-        'Carla, ¿cómo está tu bebé esta mañana?',
-        '¿El señor Pérez está contento con su trabajo?',
-        'Es el fin de semana y estoy muy contento',
-        '¿Te sientes mejor hoy, Bruno?',
-        'Ellos no son simpáticos conmigo',
-        'Sara, ¿por qué te sientes triste?',
-        'Ana siempre está feliz en la clase de francés',
-        'Lo siento, estoy muy aburrido en este concierto',
-        'Siempre me siento cansado',
-        'A veces me siento un poco cansada en la mañana',
-        'Rafael, ¿no estás emocionado?',
-        'También te sientes feliz',
+        'Mi perro no tiene una vida dura.',
+        'Ayer compramos pizzas para la fiesta.',
+        '¿Estás usando esta silla?',
+        'Es emocionante abrir muchos regalos.',
+        'Estoy usando el boligrafo azul.',
+        'Lo compramos ayer.',
+        'Duolingo tiene muchas oraciones graciosas.',
+        'Ella encontró tus llaves',
+        'Juan encontró un regalo para Miguel.',
+        'Yo creo que esta clase es muy dura.',
+        'Estamos usando mi computadora',
+        '¿Qué le compramos el año pasado?',
+        'Pablo encontró unas camisas baratas.',
+        '¿Puedes coger mi cartera marrón?',
+        'Creo que sí pero no estoy seguro.',
+        'Cojo las camisas y las lavo después.',
+        'Yo encontré una bici buena.',
+        '¿Necesitas la camiseta verde o la amarilla?',
+        'Yo cojo todo el dinero.',
+        'Encontré una vieja carta en mi escritorio.',
+        'Nosotros cogemos la comida y ustedes cojen las bebidas.',
     ]
     var phraseIds = []
     var lessonId = uuid_1.v4()
     var translations = {
         1: [
-            'I am happy with my shoes.',
-            'You are worried about the test.',
-            'The baby is sick and needs more milk.',
-            'The girl has a dog and is very excited.',
-            'I am very excited.',
-            'I feel very happy with you, Ana.',
-            'Do you feel sick, Roberto?',
-            'My sister is always bored.',
-            'Carla, how is your baby this morning?',
-            'Is Mr. Pérez happy with his job?',
-            'It is the weekend and I am very happy.',
-            'Do you feel better today, Bruno?',
-            'They are not nice to me.',
-            'Sara, why do you feel sad?',
-            'Ana is always happy in French class.',
-            'I am sorry, I am very bored at this concert.',
-            'I always feel tired.',
-            'Sometimes I feel a little tired in the morning.',
-            "Rafael, aren't you excited?",
-            'You also feel happy.',
+            'My dog does not have a hard life.',
+            'Yesterday we bought pizzas for the party.',
+            'Are you using this chair?',
+            'It is exciting to open a lot of gifts.',
+            'I am using the blue pen.',
+            'We bought it yesterday.',
+            'Duolingo has a lot of funny sentences.',
+            'She found your key.',
+            'Juan found a gift for Miguel.',
+            'I think that this class is very hard.',
+            'We are using my computer.',
+            'What did we buy her last year?',
+            'Pablo found some cheap shirts.',
+            'Can you take my brown purse?',
+            'I think so, but I am not sure.',
+            'I am taking the shirts and washing them later.',
+            'I found a good bike.',
+            'Do you need the green T-shirt or the yellow one?',
+            'I am taking all the money.',
+            'I found an old letter on my desk.',
+            'We are taking the food and you are taking the drinks.',
         ],
         2: [
-            '我對我的鞋子很滿意',
-            '您擔心測試。',
-            '嬰兒病了，需要更多的牛奶。',
-            '這個女孩有一隻狗，她非常興奮。',
-            '我非常興奮。',
-            '我對您感到非常高興，安娜。',
-            '羅伯托，你感到不舒服嗎？',
-            '我姐姐總是很無聊。',
-            '卡拉，你的寶寶今天早上好嗎？',
-            '佩雷斯先生對他的工作滿意嗎？',
-            '這是周末，我很高興。',
-            '布魯諾，你今天感覺好點了嗎？',
-            '他們對我不好。',
-            '薩拉，你為什麼感到難過？',
-            '安娜在法語課上總是很快樂。',
-            '對不起，這場音樂會我很無聊。',
-            '我總是很累。',
-            '我早上有時候會有點累。',
-            '拉斐爾，你不興奮嗎？',
-            '您也會感到高興。',
+            '我的狗沒有艱難的生活。',
+            '昨天我們為聚會買了披薩。',
+            '你在用這把椅子嗎？',
+            '打開很多禮物很令人興奮。',
+            '我正在使用藍色的筆。',
+            '我們昨天買的。',
+            'Duolingo有很多有趣的句子。',
+            '她找到了你的鑰匙。',
+            '胡安找到了禮物給米格爾。',
+            '我認為這節課很難。',
+            '我們正在使用我的電腦。',
+            '去年我們買了她什麼？',
+            '巴勃羅發現了一些便宜的襯衫。',
+            '你能拿走我的棕色錢包嗎？',
+            '我是這樣認為的，但我不確定。',
+            '我正在拿襯衫，以後洗他們。',
+            '我找到了一輛好自行車。',
+            '您需要綠色的T恤衫還是黃色的T恤衫？',
+            '我拿走了所有的錢。',
+            '我拿走了所有的錢。',
+            '我們正在拿食物，而你正在拿飲料。',
         ],
     }
     var phraseTuples = []
@@ -79,15 +82,6 @@ function createStatements() {
         phraseIds.push(id)
         phraseTuples.push("('" + id + "', '" + phrase + "', '" + lessonId + "')\n")
     })
-    var insertLessonStmt =
-        'INSERT INTO "lesson"("id", "name", "languageId") values (\'' +
-        lessonId +
-        "', '" +
-        lesson +
-        "', '16744281-e1af-44f2-a67d-0cb04bd0d6a2');"
-    var insertPhrasesStmt = 'INSERT INTO "phrase"("id", "phrase", "lessonId") values ' + phraseTuples.join(',') + ';'
-    // `INSERT INTO "translation" ("id", "translation", "translationLanguageId", "phraseId") values
-    // ('4f2db52a-8f72-4ef4-87b9-072ed64bf32f', 'I am happy with my shoes.', 1, '0b108388-f8b8-4703-a45f-e1548e9e20f8')
     var translationTuples = []
     for (var _i = 0, _a = Object.keys(translations); _i < _a.length; _i++) {
         var translateLangId = _a[_i]
@@ -108,6 +102,13 @@ function createStatements() {
             )
         }
     }
+    var insertLessonStmt =
+        'INSERT INTO "lesson"("id", "name", "languageId") values (\'' +
+        lessonId +
+        "', '" +
+        lesson +
+        "', '16744281-e1af-44f2-a67d-0cb04bd0d6a2');"
+    var insertPhrasesStmt = 'INSERT INTO "phrase"("id", "phrase", "lessonId") values ' + phraseTuples.join(',') + ';'
     var insertTranslationsStmt =
         'INSERT INTO "translation" ("id", "translation", "translationLanguageId", "phraseId") values ' +
         translationTuples.join(',') +
