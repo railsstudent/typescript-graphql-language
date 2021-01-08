@@ -112,7 +112,7 @@ function createStatements() {
 }
 
 type LessonPhrases = {
-    lessonId: string,
+    lessonId: string
     phraseIds: string[]
 }
 
