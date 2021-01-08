@@ -26,10 +26,10 @@ function createStatements() {
         'Nosotros cogemos la comida y ustedes cojen las bebidas.',
     ]
 
-    const phraseIds = []
+    const phraseIds: string[] = []
     const lessonId = uuidv4()
-    const translations = {
-        1: [
+    const translations: Record<string, string[]> = {
+        '1': [
             'My dog does not have a hard life.',
             'Yesterday we bought pizzas for the party.',
             'Are you using this chair?',
@@ -52,7 +52,7 @@ function createStatements() {
             'I found an old letter on my desk.',
             'We are taking the food and you are taking the drinks.',
         ],
-        2: [
+        '2': [
             '我的狗沒有艱難的生活。',
             '昨天我們為聚會買了披薩。',
             '你在用這把椅子嗎？',
@@ -77,16 +77,16 @@ function createStatements() {
         ],
     }
 
-    const phraseTuples = []
+    const phraseTuples: string[] = []
     phrases.forEach((phrase) => {
         const id = uuidv4()
         phraseIds.push(id)
         phraseTuples.push(`('${id}', '${phrase}', '${lessonId}')\n`)
     })
 
-    const translationTuples = []
+    const translationTuples: string[] = []
     for (const translateLangId of Object.keys(translations)) {
-        const translationArray = translations[translateLangId]
+        const translationArray: string[] = translations[translateLangId]
         for (let i = 0; i < translationArray.length; i++) {
             const id = uuidv4()
             const phraseId = phraseIds[i]
@@ -111,7 +111,12 @@ function createStatements() {
     }
 }
 
-const deleteStatements = ({ lessonId, phraseIds }) => {
+type LessonPhrases = {
+    lessonId: string,
+    phraseIds: string[]
+}
+
+const deleteStatements = ({ lessonId, phraseIds }: LessonPhrases) => {
     const deleteLessonStmt = `DELETE FROM "lesson" WHERE "id" = '${lessonId}';`
     const deletePharseStmt = `DELETE FROM "phrase" WHERE "lessonId" = '${lessonId}';`
 
