@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 function createStatements() {
-    const lesson = 'Which one 1'
+    const lesson = 'Which one 2'
     const phrases = [
         'Mi perro no tiene una vida dura.',
         'Ayer compramos pizzas para la fiesta.',
@@ -140,15 +140,21 @@ const {
     insertPhrasesStmt: insertPhraseSql,
     insertTranslationsStmt: insertTranslationSql,
 } = createStmtInfo
+
+console.log('await queryRunner.query(`')
 console.log(insertLessonSql)
 console.log(insertPhraseSql)
 console.log(insertTranslationSql)
+console.log('`)')
 
 const {
     deleteLessonStmt: deleteLessonSql,
     deletePharseStmt: deletePhraseSql,
     deleteTranslationStmt: deleteTranslationSql,
 } = deleteStmtInfo
+
+console.log('await queryRunner.query(`')
 console.log(deleteTranslationSql)
 console.log(deletePhraseSql)
 console.log(deleteLessonSql)
+console.log('`)')
